@@ -1,0 +1,102 @@
+﻿<Window x:Class="WPF_Task_5._1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPF_Task_5._1"
+        mc:Ignorable="d"
+        Title="Текстовый редактор" Height="800" Width="1000" Closing="Window_Closing">
+
+    <Window.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.Open" Executed="OpenExecuted"/>
+        <CommandBinding Command="ApplicationCommands.Save" Executed="SaveExecuted"/>
+        <CommandBinding Command="local:AppCommands.Exit" Executed="ExitExecuted"/>
+        <CommandBinding Command="local:AppCommands.SetBold" Executed="SetBoldExecuted"/>
+        <CommandBinding Command="local:AppCommands.SetItalic" Executed="SetItalicExecuted"/>
+        <CommandBinding Command="local:AppCommands.SetUnderline" Executed="SetUnderlineExecuted"/>
+        <CommandBinding Command="local:AppCommands.FontProperties" Executed="FontPropertiesExecuted"/>
+        <CommandBinding Command="local:AppCommands.About" Executed="AboutExecuted"/>
+    </Window.CommandBindings>
+
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_Файл">
+                <MenuItem Header="_Открыть" Command="ApplicationCommands.Open"/>
+                <MenuItem Header="_Сохранить" Command="ApplicationCommands.Save"/>
+                <Separator/>
+                <MenuItem Header="_Закрыть" Command="local:AppCommands.Exit"/>
+            </MenuItem>
+            <MenuItem Header="_Правка">
+                <MenuItem Header="_Отменить" Command="ApplicationCommands.Undo"/>
+                <Separator/>
+                <MenuItem Header="_Вырезать" Command="ApplicationCommands.Cut"/>
+                <MenuItem Header="_Копировать" Command="ApplicationCommands.Copy"/>
+                <MenuItem Header="Вст_авить" Command="ApplicationCommands.Paste"/>
+                <Separator/>
+                <MenuItem Header="Выделить в_се" Command="ApplicationCommands.SelectAll"/>
+            </MenuItem>
+            <MenuItem Header="Формат">
+                <MenuItem Header="_Шрифт..." Command="local:AppCommands.FontProperties"/>
+                <MenuItem Header="_Начертание">
+                    <MenuItem Header="Полужирный" Command="local:AppCommands.SetBold"/>
+                    <MenuItem Header="Курсив" Command="local:AppCommands.SetItalic"/>
+                    <MenuItem Header="Подчеркнутый" Command="local:AppCommands.SetUnderline"/>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="О программе" Command="local:AppCommands.About"/>
+        </Menu>
+
+        <StatusBar DockPanel.Dock="Bottom">
+            <TextBlock Text="Шрифт: "/>
+            <TextBlock Name="statusBarItemName1"/>
+            <Separator/>
+            <TextBlock Text="Размер шрифта: "/>
+            <TextBlock Name="statusBarItemName2"/>
+            <Separator/>
+            <TextBlock Text="Начертание: "/>
+            <TextBlock Name="statusBarItemName3"/>
+            <Separator/>
+            <TextBlock Text="Кол-во символов: "/>
+            <TextBlock Name="statusBarItemName4"/>
+            <Separator/>
+            <TextBlock Text="Кол-во строк: "/>
+            <TextBlock Name="statusBarItemName5"/>
+        </StatusBar>
+        
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <ToolBarTray Grid.Row="0">
+                <ToolBar Margin="5" Padding="5">
+                    <ComboBox Margin="5" Padding="5" ItemsSource="{StaticResource fontStyles}" SelectedIndex="0" Width="200" SelectionChanged="ComboBox_SelectionChanged"/>
+                    <ComboBox Margin="5" Padding="5" ItemsSource="{StaticResource fontSizes}" SelectedIndex="3" Width="50" SelectionChanged="ComboBox_SelectionChanged_1">
+                    </ComboBox>
+                </ToolBar>
+                <ToolBar Margin="5" Padding="5">
+                    <Button x:Name="ButtonBold" Command="local:AppCommands.SetBold">
+                        <Image Source="Data/Text_Bold.png"/>
+                    </Button>
+                    <Separator/>
+                    <Button x:Name="ButtonItalic" Command="local:AppCommands.SetItalic">
+                        <Image Source="Data/Text_Italic.png"/>
+                    </Button>
+                    <Separator/>
+                    <Button x:Name="ButtonUnderline" Command="local:AppCommands.SetUnderline">
+                        <Image Source="Data/Text_Underline.png"/>
+                    </Button>
+                    <Separator/>
+                </ToolBar>
+                <ToolBar Margin="5" Padding="5">
+                    <StackPanel VerticalAlignment="Center">
+                        <RadioButton Content="Черный" IsChecked="True" Checked="RadioButton_Checked"/>
+                        <RadioButton Content="Красный" Checked="RadioButton_Checked_1"/>
+                    </StackPanel>
+                </ToolBar>
+            </ToolBarTray>
+            <TextBox x:Name="textbox" AcceptsReturn="True" AcceptsTab="True" SpellCheck.IsEnabled="True" Grid.Row="1" Margin="5" Padding="5" FontSize="16" FontFamily="Arial" TextWrapping="Wrap" TextChanged="textbox_TextChanged">
+            </TextBox>
+        </Grid>
+    </DockPanel>
+</Window>
